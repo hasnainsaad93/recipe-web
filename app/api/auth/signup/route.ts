@@ -20,6 +20,10 @@ export async function POST(req: NextRequest) {
     if (password.length < 8) {
       return NextResponse.json({ error: "Password must be at least 8 characters." }, { status: 400 });
     }
+    if (Buffer.byteLength(password, "utf8") > 72) {
+      // bcrypt silently truncates beyond 72 bytes
+      return NextResponse.json({ error: "Password must be at most 72 characters." }, { status: 400 });
+    }
     if (!name || name.length > 60) {
       return NextResponse.json({ error: "Name is required (max 60 characters)." }, { status: 400 });
     }
@@ -37,7 +41,13 @@ export async function POST(req: NextRequest) {
     setSessionCookie(res, req, rows[0].id);
     return res;
   } catch (e: any) {
+    if (e?.code === "23505") {
+      // unique violation on email (concurrent signup)
+      return NextResponse.json({ error: "An account with that email already exists." }, { status: 409 });
+    }
     console.error(e);
-    return NextResponse.json({ error: e?.message ?? "Sign up failed." }, { status: 500 });
+    const msg = String(e?.message ?? "");
+    const config = msg.includes("DATABASE_URL") || msg.includes("SESSION_SECRET");
+    return NextResponse.json({ error: config ? msg : "Sign up failed. Please try again." }, { status: 500 });
   }
 }

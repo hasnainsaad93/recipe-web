@@ -1,9 +1,15 @@
 # RecipeShare
 
-A simple recipe-sharing app. Test
+A simple recipe-sharing app where users sign up, create a profile, and share recipes that appear under their profile.
 
-# Tech Stack
-built with Next.js 14 (App Router), TypeScript, Tailwind CSS and PostgreSQL.
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Database:** PostgreSQL
+- **Database driver:** `pg` with parameterized SQL
+- **Authentication:** Custom session with `bcryptjs` password hashing and `jsonwebtoken` signed httpOnly cookies
 
 ## Features
 - Sign up / sign in / sign out (email + password, bcrypt hashes, signed httpOnly session cookie, rate-limited sign-in)

@@ -33,6 +33,8 @@ export async function POST(req: NextRequest) {
     return res;
   } catch (e: any) {
     console.error(e);
-    return NextResponse.json({ error: e?.message ?? "Sign in failed." }, { status: 500 });
+    const msg = String(e?.message ?? "");
+    const config = msg.includes("DATABASE_URL") || msg.includes("SESSION_SECRET");
+    return NextResponse.json({ error: config ? msg : "Sign in failed. Please try again." }, { status: 500 });
   }
 }

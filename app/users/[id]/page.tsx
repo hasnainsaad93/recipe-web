@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getCurrentUser } from "@/lib/auth";
 import { getProfile } from "@/lib/users";
 import { recipesByUser } from "@/lib/recipes";
@@ -7,6 +8,11 @@ import { Avatar } from "@/components/Avatar";
 import { RecipeGrid } from "@/components/RecipeCard";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const profile = await getProfile(Number(params.id));
+  return { title: profile ? `${profile.name} - RecipeShare` : "Profile - RecipeShare" };
+}
 
 export default async function ProfilePage({ params }: { params: { id: string } }) {
   const profile = await getProfile(Number(params.id));
