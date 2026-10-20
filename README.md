@@ -1,6 +1,6 @@
 # RecipeShare
 
-A simple recipe-sharing app built with Next.js 14 (App Router), TypeScript, Tailwind CSS and PostgreSQL.
+A simple recipe-sharing app built with Next.js 14 (App Router), TypeScript, Tailwind CSS and PostgreSQL. Using a default design system
 
 ## Features
 - Sign up / sign in / sign out (email + password, bcrypt hashes, signed httpOnly session cookie, rate-limited sign-in)
