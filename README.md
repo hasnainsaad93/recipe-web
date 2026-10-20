@@ -1,6 +1,6 @@
 # RecipeShare
 
-A simple recipe-sharing app 
+A simple recipe-sharing app. Test
 
 # Tech Stack
 built with Next.js 14 (App Router), TypeScript, Tailwind CSS and PostgreSQL.
